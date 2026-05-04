@@ -193,11 +193,14 @@ document.querySelectorAll('.edu-item, .exp-item, .project-item, .skill-category,
 });
 
 // GoatCounter Integration
-setTimeout(() => {
-    if (window.goatcounter && window.goatcounter.count) {
+fetch('https://vukjovovic.goatcounter.com/api/count')
+    .then(response => response.json())
+    .then(data => {
         const countEl = document.getElementById('visit-count');
-        if (countEl) {
-            countEl.textContent = window.goatcounter.count;
+        if (countEl && data.count) {
+            countEl.textContent = data.count;
         }
-    }
-}, 1000);
+    })
+    .catch(() => {
+        // Silent fail if API is not available
+    });
