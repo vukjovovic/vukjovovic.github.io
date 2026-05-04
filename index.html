@@ -843,40 +843,125 @@
                             large-scale financial data construction, and reproducible analysis workflows.
                         </p>
 
+                        <!-- DIAGRAM -->
+                        <div class="project-diagram">
+
+                          <style>
+                            .project-diagram { margin: 1.5rem 0; font-family: var(--font-sans); }
+                            .pd-panel { display: flex; flex-direction: column; border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; background: var(--bg-alt); margin-bottom: 6px; overflow: hidden; }
+                            .pd-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--border); }
+                            .pd-step { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; color: var(--accent); text-transform: uppercase; white-space: nowrap; }
+                            .pd-title { font-size: 0.9rem; font-weight: 600; color: var(--primary); }
+                            .pd-cells { display: grid; gap: 0; }
+                            .pd-cell { padding: 12px 18px; border-right: 1px solid var(--border); }
+                            .pd-cell:last-child { border-right: none; }
+                            .pd-cell-title { font-size: 0.88rem; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+                            .pd-cell-body { font-size: 0.8rem; color: var(--text-light); line-height: 1.5; }
+                            .pd-arrow { display: flex; justify-content: center; height: 22px; align-items: center; color: var(--text-light); opacity: 0.4; font-size: 1.1rem; }
+                            body.dark-mode .pd-panel { border-left-color: #4d9fff; }
+                            body.dark-mode .pd-step { color: #4d9fff; }
+                            @media (max-width: 600px) {
+                              .pd-cells { grid-template-columns: 1fr !important; }
+                              .pd-cell { border-right: none; border-bottom: 1px solid var(--border); }
+                              .pd-cell:last-child { border-bottom: none; }
+                            }
+                          </style>
+
+                          <div class="pd-panel">
+                            <div class="pd-header"><span class="pd-step">01</span><span class="pd-title">Data sources</span></div>
+                            <div class="pd-cells" style="grid-template-columns: repeat(4, 1fr);">
+                              <div class="pd-cell"><div class="pd-cell-title">Compustat</div><div class="pd-cell-body">Accounting &amp; financial statements</div></div>
+                              <div class="pd-cell"><div class="pd-cell-title">Capital IQ</div><div class="pd-cell-body">Debt structure &amp; deal data</div></div>
+                              <div class="pd-cell"><div class="pd-cell-title">CRSP</div><div class="pd-cell-body">Market &amp; returns data</div></div>
+                              <div class="pd-cell"><div class="pd-cell-title">Auxiliary</div><div class="pd-cell-body">FX rates &amp; supplementary sources</div></div>
+                            </div>
+                          </div>
+
+                          <div class="pd-arrow">↓</div>
+
+                          <div class="pd-panel">
+                            <div class="pd-header"><span class="pd-step">02</span><span class="pd-title">Python · SQL pipeline</span></div>
+                            <div class="pd-cells" style="grid-template-columns: repeat(4, 1fr);">
+                              <div class="pd-cell"><div class="pd-cell-title">Dataset merging</div><div class="pd-cell-body">Cross-source linking &amp; identifier matching</div></div>
+                              <div class="pd-cell"><div class="pd-cell-title">Standardisation</div><div class="pd-cell-body">Units, formats, fiscal year alignment</div></div>
+                              <div class="pd-cell"><div class="pd-cell-title">No look-ahead bias</div><div class="pd-cell-body">Temporal integrity &amp; point-in-time controls</div></div>
+                              <div class="pd-cell"><div class="pd-cell-title">SQL retrieval</div><div class="pd-cell-body">Querying, filtering &amp; data access</div></div>
+                            </div>
+                          </div>
+
+                          <div class="pd-arrow">↓</div>
+
+                          <div class="pd-panel">
+                            <div class="pd-header"><span class="pd-step">03</span><span class="pd-title">Variable generation</span></div>
+                            <div class="pd-cells" style="grid-template-columns: 1fr 1fr;">
+                              <div class="pd-cell"><div class="pd-cell-title">Debt structure variables</div><div class="pd-cell-body">Bank debt · bond debt · secured debt · short-term debt · total debt</div></div>
+                              <div class="pd-cell"><div class="pd-cell-title">Financial ratios</div><div class="pd-cell-body">Leverage · debt maturity · interest coverage · size controls</div></div>
+                            </div>
+                          </div>
+
+                          <div class="pd-arrow">↓</div>
+
+                          <div class="pd-panel">
+                            <div class="pd-header"><span class="pd-step">04</span><span class="pd-title">Screening &amp; literature benchmarking</span></div>
+                            <div class="pd-cells" style="grid-template-columns: 1fr 1fr;">
+                              <div class="pd-cell"><div class="pd-cell-title">Sample filters &amp; screening</div><div class="pd-cell-body">Coverage checks · outlier treatment · consistency filters across sources</div></div>
+                              <div class="pd-cell"><div class="pd-cell-title">Literature benchmarking</div><div class="pd-cell-body">Descriptive statistics · sanity checks · consistency with prior empirical finance studies</div></div>
+                            </div>
+                          </div>
+
+                          <div class="pd-arrow">↓</div>
+
+                          <div class="pd-panel">
+                            <div class="pd-header"><span class="pd-step">05</span><span class="pd-title">Empirical analysis · EUR 500M revenue threshold</span></div>
+                            <div class="pd-cells" style="grid-template-columns: 1fr 1fr;">
+                              <div class="pd-cell"><div class="pd-cell-title">Regression discontinuity (RD)</div><div class="pd-cell-body">Sharp &amp; fuzzy design around the EUR 500M threshold</div></div>
+                              <div class="pd-cell"><div class="pd-cell-title">Difference-in-differences (DiD)</div><div class="pd-cell-body">Treatment vs. control group · panel data extension</div></div>
+                            </div>
+                          </div>
+
+                          <div class="pd-arrow">↓</div>
+
+                          <div class="pd-panel">
+                            <div class="pd-header"><span class="pd-step">06</span><span class="pd-title">Robustness &amp; validation</span></div>
+                            <div class="pd-cells" style="grid-template-columns: repeat(3, 1fr);">
+                              <div class="pd-cell"><div class="pd-cell-title">Placebo tests</div><div class="pd-cell-body">False thresholds · pre-period RD · out-of-sample checks</div></div>
+                              <div class="pd-cell"><div class="pd-cell-title">Robustness checks</div><div class="pd-cell-body">Bandwidth &amp; bias correction · fixed effects · SE clustering</div></div>
+                              <div class="pd-cell"><div class="pd-cell-title">Assumption tests</div><div class="pd-cell-body">Continuity · McCrary density · parallel trends · covariate balance</div></div>
+                            </div>
+                          </div>
+
+                          <div class="pd-arrow">↓</div>
+
+                          <div class="pd-panel">
+                            <div class="pd-header"><span class="pd-step">07</span><span class="pd-title">Results</span></div>
+                            <div class="pd-cells" style="grid-template-columns: 1fr;">
+                              <div class="pd-cell"><div class="pd-cell-title">Empirical findings &amp; reproducible workflow</div><div class="pd-cell-body">Evidence on financing choices around the EUR 500M threshold · documented codebase, variable construction logic, and replication materials</div></div>
+                            </div>
+                          </div>
+
+                        </div>
+
+                        <!-- SHORTENED BULLETS -->
                         <div class="project-highlights">
-                            <strong>Key Components:</strong>
+                            <strong>Key takeaways:</strong>
                             <ul>
                                 <li>
-                                    Conducted literature review in banking regulation, capital requirements, 
-                                    capital structure, debt structure, and empirical identification.
+                                    Built end-to-end data pipelines across multiple large institutional
+                                    databases, handling merging, standardisation, and temporal integrity
+                                    at scale.
                                 </li>
                                 <li>
-                                    Data pipelines for Compustat, Capital IQ, CRSP, and firm-level financial data.
+                                    Translated a complex regulatory framework into a testable empirical
+                                    design using regression discontinuity and difference-in-differences
+                                    methods.
                                 </li>
                                 <li>
-                                    Construction and screening of debt structure variables, including bank debt, bond debt, 
-                                    secured debt, short-term debt, leverage, and maturity-related measures.
+                                    Constructed and validated a full set of debt structure and leverage
+                                    variables benchmarked against standards in empirical corporate finance.
                                 </li>
                                 <li>
-                                    Benchmarked sample composition, variable definitions, and descriptive statistics 
-                                    against prior empirical finance studies to ensure that the constructed dataset 
-                                    was economically plausible and consistent with established research standards.
-                                </li>
-                                <li>
-                                    Literature-based benchmarking of variable construction, sample filters, 
-                                    and descriptive statistics against standards in empirical corporate finance.
-                                </li>
-                                <li>
-                                    Empirical design around the EUR 500 million revenue threshold, including 
-                                    sharp and fuzzy regression discontinuity logic.
-                                </li>
-                                <li>
-                                    Difference-in-differences extensions, robustness and sanity checks, placebo test design, 
-                                    and validation of empirical assumptions.
-                                </li>
-                                <li>
-                                    Documentation of data sources, code structure, variable screening, and 
-                                    workflow logic to support reproducibility.
+                                    Delivered a reproducible, documented research workflow covering data
+                                    construction, empirical estimation, and robustness validation.
                                 </li>
                             </ul>
                         </div>
