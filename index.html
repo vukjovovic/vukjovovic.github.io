@@ -974,6 +974,210 @@
                             </a>
                         </div>
                     </div>
+
+                    <div class="project-item">
+                        <h4>CMS Software Validation – Automated Testing Pipeline</h4>
+                        <div class="project-meta">
+                            <div class="project-role">Summer Student · Software Developer</div>
+                            <div class="project-duration">2022</div>
+                        </div>
+
+                        <p>
+                            During the CERN Summer Student Programme, I designed and implemented
+                            an automated pipeline for monitoring new CMS software releases and
+                            triggering the corresponding multi-stage validation workflow. The core
+                            challenge was not just writing code, but designing a system that could
+                            manage delayed dependencies, survive interruptions, and resume
+                            execution without human intervention.
+                        </p>
+
+                        <p>
+                            The program runs every six hours via a cron job. When a new CMS
+                            software release is detected, it fetches data through the RelVal and
+                            RelMon APIs, applies regex-based string processing, and deploys two
+                            dependent series of tests — where the second series requires results
+                            from the first. The entire cycle is managed through a checkpoint
+                            system of around ten semantic save points, allowing the process to
+                            resume from the correct stage after any interruption.
+                        </p>
+
+                        <div class="project-diagram">
+
+                          <style>
+                            .project-diagram { margin: 1.5rem 0; font-family: var(--font-sans); }
+                            .pd-panel { display: flex; flex-direction: column; border-left: 3px solid var(--accent); border-radius: 0 6px 6px 0; background: var(--bg-alt); margin-bottom: 6px; overflow: hidden; }
+                            .pd-header { display: flex; align-items: center; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--border); }
+                            .pd-step { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.08em; color: var(--accent); text-transform: uppercase; white-space: nowrap; }
+                            .pd-title { font-size: 0.9rem; font-weight: 600; color: var(--primary); }
+                            .pd-cells { display: grid; gap: 0; }
+                            .pd-cell { padding: 12px 18px; border-right: 1px solid var(--border); }
+                            .pd-cell:last-child { border-right: none; }
+                            .pd-cell-title { font-size: 0.88rem; font-weight: 600; color: var(--primary); margin-bottom: 4px; }
+                            .pd-cell-body { font-size: 0.8rem; color: var(--text-light); line-height: 1.5; }
+                            .pd-arrow { display: flex; justify-content: center; height: 22px; align-items: center; color: var(--text-light); opacity: 0.4; font-size: 1.1rem; }
+                            .pd-badge { display: inline-block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; padding: 2px 7px; border-radius: 4px; margin-left: 8px; background: var(--border); color: var(--text-light); vertical-align: middle; }
+                            body.dark-mode .pd-panel { border-left-color: #4d9fff; }
+                            body.dark-mode .pd-step { color: #4d9fff; }
+                            body.dark-mode .pd-cell { border-right-color: var(--border); }
+                            body.dark-mode .pd-header { border-bottom-color: var(--border); }
+                            @media (max-width: 600px) {
+                              .pd-cells { grid-template-columns: 1fr !important; }
+                              .pd-cell { border-right: none; border-bottom: 1px solid var(--border); }
+                              .pd-cell:last-child { border-bottom: none; }
+                            }
+                          </style>
+
+                          <div class="pd-panel">
+                            <div class="pd-header">
+                              <span class="pd-step">01</span>
+                              <span class="pd-title">Cron trigger · every 6 hours</span>
+                            </div>
+                            <div class="pd-cells" style="grid-template-columns: 1fr 1fr;">
+                              <div class="pd-cell">
+                                <div class="pd-cell-title">Read monitoring file</div>
+                                <div class="pd-cell-body">Persistent state file created and updated automatically by the program across runs</div>
+                              </div>
+                              <div class="pd-cell">
+                                <div class="pd-cell-title">Detect new CMS release</div>
+                                <div class="pd-cell-body">Compare known versions against latest release · if no new version → process exits</div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="pd-arrow">↓ new version detected</div>
+
+                          <div class="pd-panel">
+                            <div class="pd-header">
+                              <span class="pd-step">02</span>
+                              <span class="pd-title">API retrieval &amp; processing <span class="pd-badge">Series 1</span></span>
+                            </div>
+                            <div class="pd-cells" style="grid-template-columns: repeat(3, 1fr);">
+                              <div class="pd-cell">
+                                <div class="pd-cell-title">RelVal API</div>
+                                <div class="pd-cell-body">Fetch dataframes for the new release via internal CERN API</div>
+                              </div>
+                              <div class="pd-cell">
+                                <div class="pd-cell-title">Regex &amp; string ops</div>
+                                <div class="pd-cell-body">Pattern matching · character-level string manipulation to identify &amp; format test targets</div>
+                              </div>
+                              <div class="pd-cell">
+                                <div class="pd-cell-title">RelMon API</div>
+                                <div class="pd-cell-body">Parameter imputation &amp; deployment of Series 1 tests to the validation system</div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="pd-arrow">↓</div>
+
+                          <div class="pd-panel">
+                            <div class="pd-header">
+                              <span class="pd-step">03</span>
+                              <span class="pd-title">Checkpoint &amp; hibernate</span>
+                            </div>
+                            <div class="pd-cells" style="grid-template-columns: 1fr 1fr;">
+                              <div class="pd-cell">
+                                <div class="pd-cell-title">Write checkpoint</div>
+                                <div class="pd-cell-body">Save execution state to file · log current stage for operator · ~10 semantic save points total</div>
+                              </div>
+                              <div class="pd-cell">
+                                <div class="pd-cell-title">Process exits</div>
+                                <div class="pd-cell-body">Intentional hibernation · awaits next cron run in 6 hours to check Series 1 results</div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="pd-arrow">↓ next cron run · Series 1 results ready?</div>
+
+                          <div class="pd-panel">
+                            <div class="pd-header">
+                              <span class="pd-step">04</span>
+                              <span class="pd-title">Series 1 results check</span>
+                            </div>
+                            <div class="pd-cells" style="grid-template-columns: 1fr 1fr;">
+                              <div class="pd-cell">
+                                <div class="pd-cell-title">Resume from checkpoint</div>
+                                <div class="pd-cell-body">Read saved state · determine correct stage to continue from</div>
+                              </div>
+                              <div class="pd-cell">
+                                <div class="pd-cell-title">Query test status</div>
+                                <div class="pd-cell-body">Series 1 not finished → process exits and waits · Series 1 done → continue</div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="pd-arrow">↓ Series 1 complete</div>
+
+                          <div class="pd-panel">
+                            <div class="pd-header">
+                              <span class="pd-step">05</span>
+                              <span class="pd-title">API retrieval &amp; processing <span class="pd-badge">Series 2</span></span>
+                            </div>
+                            <div class="pd-cells" style="grid-template-columns: repeat(3, 1fr);">
+                              <div class="pd-cell">
+                                <div class="pd-cell-title">Fetch Series 1 results</div>
+                                <div class="pd-cell-body">Download &amp; parse completed Series 1 output as input for Series 2</div>
+                              </div>
+                              <div class="pd-cell">
+                                <div class="pd-cell-title">Regex &amp; string ops</div>
+                                <div class="pd-cell-body">Modify strings · filter &amp; select tests based on Series 1 results</div>
+                              </div>
+                              <div class="pd-cell">
+                                <div class="pd-cell-title">RelMon API</div>
+                                <div class="pd-cell-body">Inject Series 1 results · deploy Series 2 tests to the validation system</div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div class="pd-arrow">↓</div>
+
+                          <div class="pd-panel">
+                            <div class="pd-header">
+                              <span class="pd-step">06</span>
+                              <span class="pd-title">Final checkpoint &amp; cycle complete</span>
+                            </div>
+                            <div class="pd-cells" style="grid-template-columns: 1fr 1fr;">
+                              <div class="pd-cell">
+                                <div class="pd-cell-title">Write final checkpoint</div>
+                                <div class="pd-cell-body">Update monitoring file · log full cycle status for operator</div>
+                              </div>
+                              <div class="pd-cell">
+                                <div class="pd-cell-title">Both series deployed</div>
+                                <div class="pd-cell-body">Validation pipeline complete · process exits · system ready for next release cycle</div>
+                              </div>
+                            </div>
+                          </div>
+
+                        </div>
+
+                        <div class="project-highlights">
+                            <strong>Key takeaways:</strong>
+                            <ul>
+                                <li>
+                                    Learned to think beyond individual functions to full system
+                                    design — mapping out failure points, delayed dependencies,
+                                    and recovery logic before writing a single line of code.
+                                </li>
+                                <li>
+                                    Built practical experience with the full Python ecosystem
+                                    from scratch, applying it immediately to a production-grade
+                                    automation problem in a research environment.
+                                </li>
+                                <li>
+                                    Developed a fault-tolerant checkpoint architecture that
+                                    reduced the need for human intervention and allowed the
+                                    system to recover automatically from mid-execution
+                                    interruptions.
+                                </li>
+                                <li>
+                                    Gained hands-on experience with automation workflow design,
+                                    state persistence, conditional execution logic, and
+                                    maintainable code structure under real operational
+                                    constraints.
+                                </li>
+                            </ul>
+                        </div>
+
+                    </div>
                 </article>
 
                 <!-- Skills Subsection -->
