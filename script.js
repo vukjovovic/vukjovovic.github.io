@@ -193,14 +193,4 @@ document.querySelectorAll('.edu-item, .exp-item, .project-item, .skill-category,
 });
 
 // GoatCounter Integration
-fetch('https://vukjovovic.goatcounter.com/api/count')
-    .then(response => response.json())
-    .then(data => {
-        const countEl = document.getElementById('visit-count');
-        if (countEl && data.count) {
-            countEl.textContent = data.count;
-        }
-    })
-    .catch(() => {
-        // Silent fail if API is not available
-    });
+// Counter will be manually updated based on GoatCounter dashboard data
