@@ -193,11 +193,11 @@ document.querySelectorAll('.edu-item, .exp-item, .project-item, .skill-category,
 });
 
 // GoatCounter Integration
-window.addEventListener('load', () => {
-    if (window.goatcounter) {
+setTimeout(() => {
+    if (window.goatcounter && window.goatcounter.count) {
         const countEl = document.getElementById('visit-count');
-        if (countEl && window.goatcounter.data && window.goatcounter.data.count) {
-            countEl.textContent = window.goatcounter.data.count;
+        if (countEl) {
+            countEl.textContent = window.goatcounter.count;
         }
     }
-});
+}, 1000);
