@@ -32,7 +32,8 @@ const secondaryNavConfig = {
         { label: 'PhD', href: '#edu-phd' },
         { label: 'MSc', href: '#edu-msc' },
         { label: 'BSc', href: '#edu-bsc' },
-        { label: 'Conferences & Schools', href: '#edu-conferences' }
+        { label: 'Conferences & Schools', href: '#edu-conferences' },
+        { label: 'Standardized Tests', href: '#edu-standardized-tests' }
     ],
     work: [
         { label: 'Experience', href: '#work-experience' },
@@ -145,6 +146,7 @@ const scrollOffsets = {
     'edu-msc': 175,
     'edu-bsc': 175,
     'edu-conferences': 175,
+    'edu-standardized-tests': 175,
     'work-experience': 175,
     'work-projects': 175,
     'work-skills': 175
